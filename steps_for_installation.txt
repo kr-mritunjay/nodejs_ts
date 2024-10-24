@@ -1,0 +1,4 @@
+for package.json -->  npm init -y
+for type script -->  npx tsc --init
+
+change the rootdir to ./src in tsconfig.file and out dir to ./des
