@@ -1,10 +1,18 @@
 import { Client } from "pg";
 import dotenv from "dotenv";
+
 dotenv.config();
 
 const client = new Client({
   connectionString: process.env.KEY,
 });
+
+client
+  .connect()
+  .then(() => console.log("Connected successfully"))
+  .catch((err) => console.error("Connection error", err.stack));
+
+// export default client;
 
 // async function createUsersTable() {
 //   await client.connect();
@@ -21,37 +29,20 @@ const client = new Client({
 // }
 
 // createUsersTable();
-async function insertUsertable() {
-  try {
-    await client.connect();
-    const query = `
-      INSERT INTO users (id, username, email, password)
-      VALUES 
-        ($1, $2, $3, $4),
-        ($5, $6, $7, $8),
-        ($9, $10, $11, $12)
-    `;
 
-    const values = [
-      2,
-      "krmritunjay",
-      "krmritunjaykr160@gmail.com",
-      "12345", // First user
-      3,
-      "john",
-      "john.doe@gmail.com",
-      "password123", // Second user
-      4,
-      "jane",
-      "jane.doe@gmail.com",
-      "mypassword", // Third user
-    ]; // Replace '12345' with hashed password
-    const result = await client.query(query, values);
-    console.log(result);
+// other way of using insertion in sql
+
+async function insertUsertable() {
+  // await client.connect(); // Ensure connection to the database
+
+  try {
+    const insertQuery = `INSERT INTO users (username, email, password) VALUES ('ankit', 'ankitkr160@gmail.com', '1234')`;
+    const res = await client.query(insertQuery);
+    console.log("Insertion successful");
   } catch (err) {
-    console.error("Error executing query", err);
+    console.log("Error during insertion:", err); // Log the actual error message
   } finally {
-    await client.end();
+    await client.end(); // Close the connection after query execution
   }
 }
 
