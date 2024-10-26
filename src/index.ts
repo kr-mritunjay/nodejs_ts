@@ -30,7 +30,7 @@ client
 
 // createUsersTable();
 
-// other way of using insertion in sql
+// other way of using insertion in sql directly values are udated too db
 
 async function insertUsertable() {
   // await client.connect(); // Ensure connection to the database
@@ -46,4 +46,21 @@ async function insertUsertable() {
   }
 }
 
-insertUsertable();
+// best way to do sql query to avoid sql injection here values are not directly updated
+
+// coming to the get the values from users
+
+async function getQuery() {
+  try {
+    const query = `SELECT * FROM users WHERE username = $1 AND password = $2`;
+    const res = await client.query(query, ["ankit", "1234"]);
+    console.log(res.rows[0]);
+  } catch (err) {
+    console.log("Error wile fetching", err);
+  } finally {
+    await client.end();
+  }
+}
+getQuery();
+
+// insertUsertable();
