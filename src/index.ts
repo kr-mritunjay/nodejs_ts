@@ -56,7 +56,7 @@ async function getQuery() {
     const res = await client.query(query, ["ankit", "1234"]);
     console.log(res.rows[0]);
   } catch (err) {
-    console.log("Error wile fetching", err);
+    console.log("Error while fetching", err);
   } finally {
     await client.end();
   }
